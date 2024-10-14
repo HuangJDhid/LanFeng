@@ -7,7 +7,7 @@
     "build": "dumi build",
     "dev": "dumi dev",
     "prepare": "husky install && dumi setup",
-    "preview": "dumi preview",
+    "preview": "dumidumi preview",
     "start": "npm run dev"
   },
   "commitlint": {
