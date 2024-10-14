@@ -1,44 +1,43 @@
-name: LanFen²¿Êğ # ¹¤×÷Á÷µÄÃû³Æ,Èç¹ûÊ¡ÂÔ£¬ÔòÊ¹ÓÃµ±Ç°ÎÄ¼şÃû
+name: LanFenéƒ¨ç½² # å·¥ä½œæµçš„åç§°,å¦‚æœçœç•¥ï¼Œåˆ™ä½¿ç”¨å½“å‰æ–‡ä»¶å
 
-on: # ´¥·¢¹¤×÷Á÷µÄÊÂ¼ş
+on: # è§¦å‘å·¥ä½œæµçš„äº‹ä»¶
   push:
-    branches: # µ±ÍÆËÍÖÁ main ·ÖÖ§Ê±´¥·¢
+    branches: # å½“æ¨é€è‡³ main åˆ†æ”¯æ—¶è§¦å‘
       - main
 
 permissions:
       contents: write
 
 
-jobs: # ¶¨Òå¹¤×÷Á÷ÖĞµÄ×÷Òµ
-  build: # ×÷ÒµµÄÃû³Æ
-    runs-on: ubuntu-latest # Ö¸¶¨ÔËĞĞ»·¾³
-	# Ã¿¸öÈÎÎñÏÂµÄÔËĞĞ²½Öè£¬¶Ìºá¸Ü - ±íÊ¾Ò»¸ö²½Öè£¬´ÓÉÏÖÁÏÂÒÀ´ÎÖ´ĞĞ¡£
-    steps: # ×÷ÒµÖĞµÄ²½Öè
-      - name: Checkout code # ¼ì³ö´úÂë
-        uses: actions/checkout@v4 # Ò»°ãÖ±½ÓÊ¹ÓÃ±ğÈËÔ¤ÏÈÉèÖÃºÃµÄActions ÈçÊ¹ÓÃactions/checkout@v3
+jobs: # å®šä¹‰å·¥ä½œæµä¸­çš„ä½œä¸š
+  build: # ä½œä¸šçš„åç§°
+    runs-on: ubuntu-latest # æŒ‡å®šè¿è¡Œç¯å¢ƒ
+    steps: # ä½œä¸šä¸­çš„æ­¥éª¤  <= æ¯ä¸ªä»»åŠ¡ä¸‹çš„è¿è¡Œæ­¥éª¤ï¼ŒçŸ­æ¨ªæ  - è¡¨ç¤ºä¸€ä¸ªæ­¥éª¤ï¼Œä»ä¸Šè‡³ä¸‹ä¾æ¬¡æ‰§è¡Œã€‚
+      - name: Checkout code # æ£€å‡ºä»£ç 
+        uses: actions/checkout@v3 # ä¸€èˆ¬ç›´æ¥ä½¿ç”¨åˆ«äººé¢„å…ˆè®¾ç½®å¥½çš„Actions å¦‚ä½¿ç”¨actions/checkout@v3
         with:
           fetch-depth: 0
-          # Èç¹ûĞèÒªGit×ÓÄ£°æ£¬È¡Ïû×¢ÊÍÏÂÒ»ĞĞ
+          # å¦‚æœéœ€è¦Gitå­æ¨¡ç‰ˆï¼Œå–æ¶ˆæ³¨é‡Šä¸‹ä¸€è¡Œ
           # submodules: true
 
-      # ÏÂÔØnode
-      - name: ÉèÖÃ Node.js
+      # ä¸‹è½½node
+      - name: è®¾ç½® Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '16.20.2' # ÉèÖÃ Node °æ±¾
+          node-version: '16.20.2' # è®¾ç½® Node ç‰ˆæœ¬
           cache: npm
 
-      # ´ò°ü´úÂë
+      # æ‰“åŒ…ä»£ç 
       - name: Build Project
         run: |
           npm install
           npm run build
 
-      # ²¿Êğµ½github
+      # éƒ¨ç½²åˆ°github
       - name: Deploy to Github
         uses: JamesIves/github-pages-deploy-action@4.0.0
         env:
-          GITHUB_TOKEN: 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
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_BLOG }}
         with:
-          branch: build # ´ò°üµÄÄÚÈİ·Åµ½build·ÖÖ§ÏÂ
+          branch: build # æ‰“åŒ…çš„å†…å®¹æ”¾åˆ°buildåˆ†æ”¯ä¸‹
           folder: dist
