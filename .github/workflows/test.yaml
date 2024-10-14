@@ -1,0 +1,44 @@
+name: LanFen部署 # 工作流的名称,如果省略，则使用当前文件名
+
+on: # 触发工作流的事件
+  push:
+    branches: # 当推送至 main 分支时触发
+      - main
+
+permissions:
+      contents: write
+
+
+jobs: # 定义工作流中的作业
+  build: # 作业的名称
+    runs-on: ubuntu-latest # 指定运行环境
+	# 每个任务下的运行步骤，短横杠 - 表示一个步骤，从上至下依次执行。
+    steps: # 作业中的步骤
+      - name: Checkout code # 检出代码
+        uses: actions/checkout@v4 # 一般直接使用别人预先设置好的Actions 如使用actions/checkout@v3
+        with:
+          fetch-depth: 0
+          # 如果需要Git子模版，取消注释下一行
+          # submodules: true
+
+      # 下载node
+      - name: 设置 Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.20.2' # 设置 Node 版本
+          cache: npm
+
+      # 打包代码
+      - name: Build Project
+        run: |
+          npm install
+          npm run build
+
+      # 部署到github
+      - name: Deploy to Github
+        uses: JamesIves/github-pages-deploy-action@4.0.0
+        env:
+          GITHUB_TOKEN: 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
+        with:
+          branch: build # 打包的内容放到build分支下
+          folder: dist
