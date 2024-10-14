@@ -24,7 +24,7 @@ jobs: # 定义工作流中的作业
       - name: 设置 Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '16.20.2' # 设置 Node 版本
+          node-version: '20.17.0' # 设置 Node 版本
           cache: npm
 
       # 打包代码
